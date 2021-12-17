@@ -1,0 +1,144 @@
+\documentclass[a4paper,12pt,oneside,openany]{book}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%      THESIS PARAMETERS       %%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Language Option: "tr" or "eng"                (default: "eng")
+% Degree Option: "ms" or "phd"                  (default: "ms")
+% For Thesis Monitoring Committee Report: "tmc"
+% Bibliography Option: "ieee" or "authoryear"   (default: "ieee")
+
+% Example:   \usepackage[tr, phd, tmc]{ytuthesis}
+%            \usepackage[eng, ms]{ytuthesis}
+%            \usepackage[tr, ms, authoryear]{ytuthesis}
+\usepackage[eng, ms]{ytuthesis}
+
+% this is for algoritm boxes
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{makecell}
+\usepackage{threeparttable}
+ 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=t,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    xleftmargin=10pt
+}
+ 
+
+\lstset{style=mystyle}
+
+%% this is for adding algoritm boxes into Tables list
+\usepackage{hyperref}
+\makeatletter
+% Grab the old \addcontentsline, which has been already being redefined by hyperref (eventually)
+\let\latex@@addcontentsline\addcontentsline 
+
+\AtBeginDocument{%
+    \renewcommand{\addcontentsline}[3]{%
+  \def\@@zzz{#1}\def\@@zxx{lol}
+  \latex@@addcontentsline{%
+    \ifx\@@zzz\@@zxx lot\else #1\fi
+  }{#2}{#3}%
+}
+
+\renewcommand\lstlistingname{Table}
+\let\l@lstlisting\l@table
+\let\c@lstlisting\c@table
+\let\thelstlisting\thetable
+\let\ftype@lstlisting\ftype@table
+}
+\makeatother
+
+%%% for prettier tables
+\usepackage{booktabs}
+\renewcommand{\arraystretch}{1.2}
+\usepackage{colortbl}%
+  \newcommand{\myrowcolour}{\rowcolor[gray]{0.925}}
+%% \usepackage[table]{xcolor}
+
+%% footnotes for tables
+%% source: https://tex.stackexchange.com/a/109471
+\usepackage{footnote}
+\makesavenoteenv{tabular}
+\makesavenoteenv{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%         REFERENCES       %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addbibresource{references.bib} 
+
+
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%         FRONT PAGES      %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input {frontPages.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%      CHAPTERS     %%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input {thesisChapters/1-chapter.tex}
+\input {thesisChapters/2-chapter.tex}
+\input {thesisChapters/3-chapter.tex}
+\input {thesisChapters/4-chapter.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%         REFERENCES       %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% for articles, there's no url entry in .bib file, otherwise, References will show "[Online] Available:" info redundantly.
+\newpage
+\addcontentsline{toc}{chapter}{\bibName}
+\singlespacing
+\printbibliography[title={\bibName}]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%      APPENDICES     %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage\appendix
+
+ \input {thesisChapters/A-appendix.tex}
+ 
+ 
+ 
+% \input {thesisChapters/B-appendix.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%     PUBLICATIONS FROM THESIS     %%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% \ifnum\tmc=0
+%% \newpage
+%% \addcontentsline{toc}{chapter}{\cvpub}
+%% \input {publications.tex}
+%% \fi
+
+\end{document}
